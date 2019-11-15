@@ -5,19 +5,18 @@ using UnityEngine;
 public class DamageReceiver : MonoBehaviour {
 
    public float Health;
-
-   float currentHealth;
+   public float CurrentHealth { get; private set; }
 
    void OnEnable()
    {
-      currentHealth = Health;
+      CurrentHealth = Health;
    }
 
    public void ReceiveDamage(float damage)
    {
-      currentHealth -= damage;
-      currentHealth = Mathf.Clamp(currentHealth, 0, Health);
-      if(currentHealth < Mathf.Epsilon)
+      CurrentHealth -= damage;
+      CurrentHealth = Mathf.Clamp(CurrentHealth, 0, Health);
+      if(CurrentHealth < Mathf.Epsilon)
          Destroy(gameObject);
    }
 	

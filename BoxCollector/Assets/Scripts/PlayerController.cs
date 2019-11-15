@@ -15,12 +15,14 @@ public class PlayerController : ActorController {
    float yaw = 0f;
    Vector3 lastMouse;
    float lastShotTime;
+   DamageReceiver playerHealth;
    
 	void OnEnable() {
       playerCam = GetComponentInChildren<Camera>();
       bulletOrigin = playerCam.transform.GetChild(0);
       yaw = transform.eulerAngles.y;
       lastMouse = Input.mousePosition;
+      playerHealth = GetComponent<DamageReceiver>();
 	}
 
    void Update()
@@ -50,6 +52,7 @@ public class PlayerController : ActorController {
       targetPosition = transform.position + transform.TransformDirection(move).normalized;
       jump = Input.GetKey(KeyCode.Space);
       run = Input.GetKey(KeyCode.LeftShift);
+      DamageZone.ApplyDamage(playerHealth);
 	}
 
 }
