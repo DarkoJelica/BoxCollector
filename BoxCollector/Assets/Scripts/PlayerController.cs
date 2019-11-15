@@ -10,15 +10,20 @@ public class PlayerController : MonoBehaviour {
    public float RunSpeedMultiplier;
    public float MaxCamPitch;
    public float MaxFloorNormal;
+   public BulletPool BulletPool;
+   public float MinShotInterval;
 
    Camera playerCam;
+   Transform bulletOrigin;
    float pitch = 0f;
    float yaw = 0f;
    Vector3 lastMouse;
    Rigidbody playerBody;
+   float lastShotTime;
    
 	void Start () {
       playerCam = GetComponentInChildren<Camera>();
+      bulletOrigin = playerCam.transform.GetChild(0);
       yaw = transform.eulerAngles.y;
       lastMouse = Input.mousePosition;
       playerBody = GetComponent<Rigidbody>();
@@ -34,6 +39,11 @@ public class PlayerController : MonoBehaviour {
       pitch = Mathf.Clamp(pitch, -MaxCamPitch, MaxCamPitch);
       transform.rotation = Quaternion.Euler(0, yaw, 0);
       playerCam.transform.localRotation = Quaternion.Euler(pitch, 0, 0);
+      if(Input.GetMouseButtonDown(0) && Time.time - lastShotTime > MinShotInterval)
+      {
+         if(BulletPool.ShootBullet(bulletOrigin.position, bulletOrigin.forward))
+            lastShotTime = Time.time;
+      }
 	}
 
    void OnCollisionStay(Collision collision)
