@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 23924612235415612}
   - component: {fileID: 54199952581183802}
   - component: {fileID: 114588208543395778}
+  - component: {fileID: 114998458100722514}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -112,6 +113,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Health: 100
+--- !u!114 &114998458100722514
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1505586769312650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee3c3a75233dba241b9bc22bc41ca58b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Speed: 2
+  RunSpeedMultiplier: 0
+  JumpSpeed: 0
+  MaxFloorNormal: 20
+  MoveThreshold: 0.1
+  PatrolPoints: []
+  PointSwitchDistance: 2
 --- !u!136 &136011572528818186
 CapsuleCollider:
   m_ObjectHideFlags: 1

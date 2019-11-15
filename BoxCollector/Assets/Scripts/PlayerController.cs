@@ -2,14 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : ActorController {
 
    public float Sensitivity;
-   public float Speed;
-   public float JumpSpeed;
-   public float RunSpeedMultiplier;
    public float MaxCamPitch;
-   public float MaxFloorNormal;
    public BulletPool BulletPool;
    public float MinShotInterval;
 
@@ -18,15 +14,13 @@ public class PlayerController : MonoBehaviour {
    float pitch = 0f;
    float yaw = 0f;
    Vector3 lastMouse;
-   Rigidbody playerBody;
    float lastShotTime;
    
-	void Start () {
+	void OnEnable() {
       playerCam = GetComponentInChildren<Camera>();
       bulletOrigin = playerCam.transform.GetChild(0);
       yaw = transform.eulerAngles.y;
       lastMouse = Input.mousePosition;
-      playerBody = GetComponent<Rigidbody>();
 	}
 
    void Update()
@@ -44,34 +38,18 @@ public class PlayerController : MonoBehaviour {
          if(BulletPool.ShootBullet(bulletOrigin.position, bulletOrigin.forward))
             lastShotTime = Time.time;
       }
+      Vector3 move = Vector3.zero;
+      if(Input.GetKey(KeyCode.W))
+         move.z += 1;
+      if(Input.GetKey(KeyCode.S))
+         move.z -= 1;
+      if(Input.GetKey(KeyCode.A))
+         move.x -= 1;
+      if(Input.GetKey(KeyCode.D))
+         move.x += 1;
+      targetPosition = transform.position + transform.TransformDirection(move).normalized;
+      jump = Input.GetKey(KeyCode.Space);
+      run = Input.GetKey(KeyCode.LeftShift);
 	}
-
-   void OnCollisionStay(Collision collision)
-   {
-      bool grounded = false;
-      for(int i = 0; i < collision.contacts.Length; ++i)
-      {
-         if(Vector3.Angle(Vector3.up, collision.contacts[i].normal) <= MaxFloorNormal)
-         {
-            grounded = true;
-            break;
-         }
-      }
-      if(!grounded)
-         return;
-      float zSpeed = Input.GetKey(KeyCode.W) ? 1 : 0;
-      zSpeed += Input.GetKey(KeyCode.S) ? -1 : 0;
-      float xSpeed = Input.GetKey(KeyCode.A) ? -1 : 0;
-      xSpeed += Input.GetKey(KeyCode.D) ? 1 : 0;
-      if(Input.GetKey(KeyCode.LeftShift))
-      {
-         xSpeed *= RunSpeedMultiplier;
-         zSpeed *= RunSpeedMultiplier;
-      }
-      float ySpeed = 0f;
-      if(Input.GetKey(KeyCode.Space))
-         ySpeed = JumpSpeed;
-      playerBody.velocity = transform.TransformDirection(new Vector3(xSpeed, ySpeed, zSpeed));
-   }
 
 }

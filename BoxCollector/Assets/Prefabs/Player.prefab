@@ -215,12 +215,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aae225c94e0fe043b7b36f34cc6dab4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Sensitivity: 0.5
   Speed: 2
-  JumpSpeed: 3
   RunSpeedMultiplier: 2
+  JumpSpeed: 3
+  MaxFloorNormal: 20
+  MoveThreshold: 0.1
+  Sensitivity: 0.5
   MaxCamPitch: 80
-  MaxFloorNormal: 0
   BulletPool: {fileID: 0}
   MinShotInterval: 0.25
 --- !u!124 &124737277109550442

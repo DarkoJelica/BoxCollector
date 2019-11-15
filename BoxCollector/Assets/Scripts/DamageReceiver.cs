@@ -16,7 +16,8 @@ public class DamageReceiver : MonoBehaviour {
    public void ReceiveDamage(float damage)
    {
       currentHealth -= damage;
-      if(currentHealth < 0)
+      currentHealth = Mathf.Clamp(currentHealth, 0, Health);
+      if(currentHealth < Mathf.Epsilon)
          Destroy(gameObject);
    }
 	
