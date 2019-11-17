@@ -10,6 +10,7 @@ public class EnemyController : ActorController {
    int currentPoint = 0;
 	
 	void Update() {
+      base.UpdateZoneDamage();
       if(PatrolPoints.Length == 0)
          return;
       Vector3 deltaPos = transform.position - PatrolPoints[currentPoint];

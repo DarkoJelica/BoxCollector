@@ -9,12 +9,24 @@ public class ActorController : MonoBehaviour {
    public float JumpSpeed;
    public float MaxFloorNormal;
    public float MoveThreshold;
+   public bool ReceiveZoneDamage;
+
+   public DamageReceiver Health { get; private set; }
 
    protected Vector3 targetPosition;
    protected bool run;
    protected bool jump;
 
    Rigidbody actorBody;
+
+   protected void UpdateZoneDamage()
+   {
+      if(!ReceiveZoneDamage)
+         return;
+      if(Health == null)
+         Health = GetComponent<DamageReceiver>();
+      DamageZone.ApplyDamage(Health);
+   }
 
    void OnCollisionStay(Collision collision)
    {

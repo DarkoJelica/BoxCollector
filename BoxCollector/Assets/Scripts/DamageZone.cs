@@ -20,7 +20,8 @@ public class DamageZone : MonoBehaviour {
 
    void Update()
    {
-      zoneLight.cookieSize = Size * 2;
+      zoneLight.cookieSize = Size;
+      zones.RemoveAll(item => item == null);
    }
 
    public static void ApplyDamage(DamageReceiver receiver)

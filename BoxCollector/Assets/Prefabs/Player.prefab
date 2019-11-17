@@ -99,7 +99,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1338644866587032}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.87, z: 0.523}
+  m_LocalPosition: {x: -0, y: 0.87, z: 0.587}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4307370610907556}
@@ -221,10 +221,14 @@ MonoBehaviour:
   JumpSpeed: 3
   MaxFloorNormal: 20
   MoveThreshold: 0.1
+  ReceiveZoneDamage: 1
   Sensitivity: 0.5
   MaxCamPitch: 80
   BulletPool: {fileID: 0}
   MinShotInterval: 0.25
+  InventoryRows: 2
+  InventoryColumns: 3
+  PickupRange: 3
 --- !u!114 &114884856574993988
 MonoBehaviour:
   m_ObjectHideFlags: 1
