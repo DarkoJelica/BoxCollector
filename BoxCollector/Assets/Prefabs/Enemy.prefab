@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c640f0f6073459f4591b73666faf9602, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 100
+  MaxHealth: 100
 --- !u!114 &114998458100722514
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -129,6 +129,7 @@ MonoBehaviour:
   JumpSpeed: 0
   MaxFloorNormal: 20
   MoveThreshold: 0.1
+  ReceiveZoneDamage: 0
   PatrolPoints: []
   PointSwitchDistance: 2
 --- !u!136 &136011572528818186

@@ -123,6 +123,54 @@ public class PlayerController : ActorController {
          boxes.Add(PickupObject);
    }
 
+   public void SwapSlots(int sourceSlot, int sourceQuantity, int targetSlot)
+   {
+      if(sourceSlot < 0 || sourceSlot >= Inventory.Count || targetSlot < 0 || targetSlot >= Inventory.Count || sourceQuantity < 1)
+         return;
+      if(sourceQuantity > Inventory[sourceSlot].Count)
+         sourceQuantity = Inventory[sourceSlot].Count;
+      List<Collectible> swappedCollectibles = new List<Collectible>();
+      for(int i = 0; i < sourceQuantity; ++i)
+      {
+         swappedCollectibles.Add(Inventory[sourceSlot][Inventory[sourceSlot].Count - 1]);
+         Inventory[sourceSlot].RemoveAt(Inventory[sourceSlot].Count - 1);
+      }
+      if(Inventory[targetSlot].Count > 0 && Inventory[targetSlot][0].StackID != swappedCollectibles[0].StackID)
+      {
+         if(Inventory[sourceSlot].Count > swappedCollectibles.Count)
+            return;
+         Inventory[sourceSlot] = Inventory[targetSlot];
+         Inventory[targetSlot] = swappedCollectibles;
+         return;
+      }
+      for(int i = 0; i < swappedCollectibles.Count; ++i)
+      {
+         if(Inventory[targetSlot].Count == 0 || Inventory[targetSlot].Count < swappedCollectibles[i].MaxStackSize)
+            Inventory[targetSlot].Add(swappedCollectibles[i]);
+         else
+            Inventory[sourceSlot].Add(swappedCollectibles[i]);
+      }
+   }
+
+   public void Drop(int slot, int quantity)
+   {
+      if(slot < 0 || slot >= Inventory.Count || quantity < 1)
+         return;
+      int droppedQuantity = Inventory[slot].Count < quantity ? Inventory[slot].Count : quantity;
+      for(int i = 0; i < droppedQuantity; ++i)
+      {
+         if(Inventory[slot][i].DestroyOnDrop)
+            Destroy(Inventory[slot][i].gameObject);
+         else
+         {
+            Inventory[slot][i].transform.parent = null;
+            Inventory[slot][i].transform.position = bulletOrigin.position;
+            Inventory[slot][i].gameObject.SetActive(true);
+         }
+      }
+      UpdateInventory();
+   }
+
    void UpdateInventory()
    {
       for(int i = 0; i < Inventory.Count; ++i)

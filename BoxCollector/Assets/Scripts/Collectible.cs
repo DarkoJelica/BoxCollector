@@ -10,6 +10,7 @@ public class Collectible : MonoBehaviour {
    public int StackID;
    public Sprite Icon;
    public CollectibleTypes Type;
+   public bool DestroyOnDrop;
 
    public static int BoxCount { get; private set; }
 
