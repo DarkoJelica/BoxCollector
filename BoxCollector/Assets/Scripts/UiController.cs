@@ -11,17 +11,36 @@ public class UiController : MonoBehaviour {
    enum UiModes { MENU, HUD, INVENTORY }
 
    UiModes currentMode = UiModes.HUD;
+   bool initalized = false;
 
    void Update()
    {
+      PlayerController player = PlayerController.PlayerInstance;
       if(PlayerController.PlayerInstance == null)
+      {
          currentMode = UiModes.MENU;
+         if(initalized)
+            Menu.Title.text = "You died";
+         else if(Menu.Title != null)
+            Menu.Title.text = "Box Collector";
+      }
       else
       {
-         if(Input.GetKeyDown(KeyCode.Escape))
-            currentMode = currentMode == UiModes.MENU ? UiModes.HUD : UiModes.MENU;
-         if(currentMode != UiModes.MENU && Input.GetKeyDown(KeyCode.Tab))
-            currentMode = currentMode == UiModes.INVENTORY ? UiModes.HUD : UiModes.INVENTORY;
+         if(!initalized)
+            initalized = true;
+         if(player.Boxes >= Collectible.BoxCount)
+         {
+            currentMode = UiModes.MENU;
+            Menu.Title.text = "You are victorious";
+         }
+         else
+         {
+            Menu.Title.text = "Box Collector";
+            if(Input.GetKeyDown(KeyCode.Escape))
+               currentMode = currentMode == UiModes.MENU ? UiModes.HUD : UiModes.MENU;
+            if(currentMode != UiModes.MENU && Input.GetKeyDown(KeyCode.Tab))
+               currentMode = currentMode == UiModes.INVENTORY ? UiModes.HUD : UiModes.INVENTORY;
+         }
       }
       switch(currentMode)
       {
