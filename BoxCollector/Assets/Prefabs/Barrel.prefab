@@ -124,10 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd57f6bb0b1b7cb43b3eca3f9eeb6b36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxStackSize: 10
-  StackID: 2
-  Icon: {fileID: 21300006, guid: 55aaaad46f61c2241abdfe5552937589, type: 3}
-  Type: 2
+  Data: {fileID: 11400000, guid: 3dd6f1b710441f845ab1a611a392b906, type: 2}
 --- !u!135 &135839677183121652
 SphereCollider:
   m_ObjectHideFlags: 1

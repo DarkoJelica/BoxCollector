@@ -232,20 +232,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\ActorController.cs" />
-    <Compile Include="Assets\Scripts\Bullet.cs" />
-    <Compile Include="Assets\Scripts\BulletPool.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
-    <Compile Include="Assets\Scripts\Collectible.cs" />
-    <Compile Include="Assets\Scripts\DamageReceiver.cs" />
-    <Compile Include="Assets\Scripts\DamageZone.cs" />
-    <Compile Include="Assets\Scripts\EnemyController.cs" />
-    <Compile Include="Assets\Scripts\HudController.cs" />
-    <Compile Include="Assets\Scripts\InventoryController.cs" />
-    <Compile Include="Assets\Scripts\InventorySlot.cs" />
-    <Compile Include="Assets\Scripts\MenuController.cs" />
-    <Compile Include="Assets\Scripts\PlayerController.cs" />
-    <Compile Include="Assets\Scripts\UiController.cs" />
+    <Compile Include="Assets\Scripts\Objects\ActorController.cs" />
+    <Compile Include="Assets\Scripts\Objects\Bullet.cs" />
+    <Compile Include="Assets\Scripts\Objects\BulletPool.cs" />
+    <Compile Include="Assets\Scripts\Objects\Collectible.cs" />
+    <Compile Include="Assets\Scripts\Objects\CollectibleData.cs" />
+    <Compile Include="Assets\Scripts\Objects\CollectibleSpawner.cs" />
+    <Compile Include="Assets\Scripts\Objects\DamageReceiver.cs" />
+    <Compile Include="Assets\Scripts\Objects\DamageZone.cs" />
+    <Compile Include="Assets\Scripts\Objects\EnemyController.cs" />
+    <Compile Include="Assets\Scripts\Objects\EnemyPath.cs" />
+    <Compile Include="Assets\Scripts\Objects\EnemySpawner.cs" />
+    <Compile Include="Assets\Scripts\Objects\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\UI\HudController.cs" />
+    <Compile Include="Assets\Scripts\UI\InventoryController.cs" />
+    <Compile Include="Assets\Scripts\UI\InventorySlot.cs" />
+    <Compile Include="Assets\Scripts\UI\MenuController.cs" />
+    <Compile Include="Assets\Scripts\UI\UiController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
