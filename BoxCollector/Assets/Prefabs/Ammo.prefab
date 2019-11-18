@@ -114,6 +114,7 @@ MonoBehaviour:
   MaxStackSize: 100
   StackID: 3
   Icon: {fileID: 21300002, guid: 55aaaad46f61c2241abdfe5552937589, type: 3}
+  Type: 1
 --- !u!135 &135989019643386770
 SphereCollider:
   m_ObjectHideFlags: 1

@@ -11,24 +11,40 @@ public class PlayerController : ActorController {
    public int InventoryRows;
    public int InventoryColumns;
    public float PickupRange;
+   [HideInInspector]
+   public bool BlockShooting;
 
-   public int Ammo { get; private set; }
-   public int Boxes { get; private set; }
+   public int Ammo
+   {
+      get
+      {
+         return ammo.Count;
+      }
+   }
+   public int Boxes
+   {
+      get
+      {
+         return boxes.Count;
+      }
+   }
    public List<List<Collectible>> Inventory { get; private set; }
    public Collectible PickupObject { get; private set; }
+   public Transform Viewpoint { get; private set; }
 
    public static PlayerController PlayerInstance;
-
-   Camera playerCam;
+   
    Transform bulletOrigin;
    float pitch = 0f;
    float yaw = 0f;
    Vector3 lastMouse;
    float lastShotTime;
+   List<Collectible> ammo = new List<Collectible>();
+   List<Collectible> boxes = new List<Collectible>();
    
 	void OnEnable() {
-      playerCam = GetComponentInChildren<Camera>();
-      bulletOrigin = playerCam.transform.GetChild(0);
+      Viewpoint = transform.Find("Viewpoint");
+      bulletOrigin = Viewpoint.transform.GetChild(0);
       yaw = transform.eulerAngles.y;
       lastMouse = Input.mousePosition;
       PlayerInstance = this;
@@ -41,6 +57,7 @@ public class PlayerController : ActorController {
    void Update()
    {
       base.UpdateZoneDamage();
+      UpdateInventory();
       Vector3 deltaMouse = Input.mousePosition - lastMouse;
       lastMouse = Input.mousePosition;
       yaw += deltaMouse.x * Sensitivity;
@@ -48,11 +65,12 @@ public class PlayerController : ActorController {
       pitch -= deltaMouse.y * Sensitivity;
       pitch = Mathf.Clamp(pitch, -MaxCamPitch, MaxCamPitch);
       transform.rotation = Quaternion.Euler(0, yaw, 0);
-      playerCam.transform.localRotation = Quaternion.Euler(pitch, 0, 0);
-      if(Input.GetMouseButtonDown(0) && Time.time - lastShotTime > MinShotInterval)
+      Viewpoint.transform.localRotation = Quaternion.Euler(pitch, 0, 0);
+      if(Ammo > 0 && !BlockShooting && Input.GetMouseButtonDown(0) && Time.time - lastShotTime > MinShotInterval)
       {
          if(BulletPool.ShootBullet(bulletOrigin.position, bulletOrigin.forward))
             lastShotTime = Time.time;
+         Destroy(ammo[ammo.Count - 1].gameObject);
       }
       Vector3 move = Vector3.zero;
       if(Input.GetKey(KeyCode.W))
@@ -66,10 +84,9 @@ public class PlayerController : ActorController {
       targetPosition = transform.position + transform.TransformDirection(move).normalized;
       jump = Input.GetKey(KeyCode.Space);
       run = Input.GetKey(KeyCode.LeftShift);
-      DamageZone.ApplyDamage(Health);
       PickupObject = null;
       RaycastHit hit;
-      Physics.Raycast(playerCam.transform.position, playerCam.transform.forward, out hit);
+      Physics.Raycast(Viewpoint.transform.position, Viewpoint.transform.forward, out hit);
       if(hit.transform != null && hit.distance < PickupRange)
          PickupObject = hit.transform.GetComponent<Collectible>();
       if(Input.GetKey(KeyCode.E))
@@ -100,6 +117,18 @@ public class PlayerController : ActorController {
       PickupObject.transform.parent = transform;
       PickupObject.transform.localPosition = Vector3.zero;
       PickupObject.gameObject.SetActive(false);
+      if(PickupObject.Type == CollectibleTypes.AMMO)
+         ammo.Add(PickupObject);
+      else if(PickupObject.Type == CollectibleTypes.BOX)
+         boxes.Add(PickupObject);
+   }
+
+   void UpdateInventory()
+   {
+      for(int i = 0; i < Inventory.Count; ++i)
+         Inventory[i].RemoveAll(collectible => collectible == null || collectible.transform.parent != transform);
+      ammo.RemoveAll(collectible => collectible == null || collectible.transform.parent != transform);
+      boxes.RemoveAll(collectible => collectible == null || collectible.transform.parent != transform);
    }
 
 }

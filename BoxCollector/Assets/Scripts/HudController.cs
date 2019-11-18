@@ -8,15 +8,27 @@ public class HudController : MonoBehaviour {
    public Text Health;
    public Text Ammo;
    public Text Boxes;
+   public Text Pickup;
 	
 	void OnGUI() {
-      if(PlayerController.PlayerInstance == null)
+      PlayerController player = PlayerController.PlayerInstance;
+      if(player == null)
          return;
       if(Health != null)
-         Health.text = "Health: " + Mathf.RoundToInt(PlayerController.PlayerInstance.Health.CurrentHealth) + '/' + Mathf.RoundToInt(PlayerController.PlayerInstance.Health.Health);
+         Health.text = "Health: " + Mathf.RoundToInt(player.Health.CurrentHealth) + '/' + Mathf.RoundToInt(player.Health.MaxHealth);
       if(Ammo != null)
          Ammo.text = "Ammo: " + PlayerController.PlayerInstance.Ammo;
       if(Boxes != null)
-         Boxes.text = "Boxes: " + PlayerController.PlayerInstance.Boxes;
+         Boxes.text = "Boxes: " + PlayerController.PlayerInstance.Boxes + '/' + Collectible.BoxCount;
+      if(Pickup != null)
+      {
+         if(PlayerController.PlayerInstance.PickupObject == null)
+            Pickup.gameObject.SetActive(false);
+         else
+         {
+            Pickup.gameObject.SetActive(true);
+            Pickup.text = "[E] Pickup " + PlayerController.PlayerInstance.PickupObject.name;
+         }
+      }
 	}
 }
